@@ -1,0 +1,44 @@
+
+
+*{
+  font-family: "Inter", sans-serif;
+  font-style: normal;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#root{
+  position: fixed;
+}
+
+body{
+  display: flex;
+  justify-content: center;
+  background-color:  #2B2D31;
+}
+
+h2{
+  color: #FFFFFF;
+  font-weight:1 ;
+  font-size: 24px;
+}
+
+
+h4{
+  color: #BDBDBD;
+  line-height: 16.94px;
+  font-weight: 400;
+}
+
+button{
+  cursor: pointer;
+  border: 0;
+  background: none;
+}
+
+hr{
+  height: 1px;
+  background-color:#3C4043;
+  border: none;
+}

@@ -1,0 +1,61 @@
+
+#conteudo{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+}
+
+#tela_princ{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width:613px;
+}
+
+#logo{
+  width: 231.45px;
+  height: 60px;
+  margin-top: 8%;
+  margin-bottom:20%;
+}
+
+#area_tarefa{
+  height: 51px;
+  width: 100%;
+}
+
+#area_tarefa .titulo{
+  margin-bottom: 20px;
+}
+
+#estado_vazio{
+  margin: 80px 0px;
+}
+
+#botao_adicionar{
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 15px;
+  padding: 20px 200px;
+  color: #989898;
+  background-color:#2B2D31;
+  border:dashed , 2px;
+  border-radius: 8px;
+  transition: color 0.3s ease;
+}
+
+#botao_adicionar:hover{
+  color: #FFFFFF;
+}
+
+#estado_cheio{
+  width: 100%;
+  margin: 30px;
+}
+
+

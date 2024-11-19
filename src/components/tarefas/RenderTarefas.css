@@ -1,0 +1,56 @@
+
+
+.tarefas_conteudo{
+  display: flex; 
+  align-items: center;
+  height: 80px;
+  width:100% ;
+  padding: 1rem;
+  transition: background 0.3s ease;
+}
+
+.tarefas_conteudo:hover{
+  background-color: #35373C;
+}
+
+.tarefa{
+    display: flex;
+    gap: 20px;
+}
+
+.tarefas_info{
+    display: flex;
+    flex-direction: column;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 400px;
+}
+
+.tarefas_btn{
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    gap: 20px;
+}
+
+.titulo h2{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.traco{
+    color: #FFFF;
+    text-decoration: Line-through;
+}
+
+.tarefas_btn button{
+    width: 23px;
+}
+
+.checkbox{
+    cursor: pointer;
+    border: 1px solid #989898;
+    background-color :#989898;
+    width: 24px;
+}
