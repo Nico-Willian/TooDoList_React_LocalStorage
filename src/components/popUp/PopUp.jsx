@@ -9,8 +9,8 @@ function PopUp({abrir, fechar, salvar, tarefaEdicao, acao}){
 
   useEffect(() => {
     if (tarefaEdicao) {
-      setTitulo(tarefaEdicao.titulo)
-      setDescricao(tarefaEdicao.descricao)
+      setTitulo(tarefaEdicao.title)
+      setDescricao(tarefaEdicao.description)
     }  }, [tarefaEdicao])
   
   function envioSalvar(e) {

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { api } from './services/api';
 
 import './App.css'
 
@@ -16,8 +17,18 @@ function App() {
   const [tarefaEdicao, setTarefaEdicao] = useState(null)
 
   useEffect(() => {
-    localStorage.setItem('tarefas', JSON.stringify(salvarTarefas))
-  }, [salvarTarefas])
+    async function carregarTarefas() {
+        try {
+            const response = await api.get('/tasks');
+            setSalvarTarefas(response.data);
+        } catch (error) {
+            console.error('Erro ao carregar tarefas:', error);
+        }
+    }
+    carregarTarefas();
+}, []);
+
+
 
   function adicionarTarefa(){
     setTarefaAcao('adicionar')
@@ -25,40 +36,44 @@ function App() {
     setAbrirPopUp(true)
   }
 
-  function salvarTarefa(titulo, descricao) {
+  async function salvarTarefa(titulo, descricao) {
     if (titulo.trim() === '') {
-      alert('Informe no minimo um TITULO!!')
-      return
+        alert('Informe no mínimo um TÍTULO!');
+        return;
     }
-    if (tarefaAcao === 'adicionar') {
-      const novaTarefa = {
-        id: Date.now(),
-        titulo: titulo,
-        descricao: descricao,
-        isChecked: false
-      }
-      setSalvarTarefas([...salvarTarefas, novaTarefa])
-    } else {
-      const tarefasAtualizadas = salvarTarefas.map(tarefa => {
-        if (tarefa.id === tarefaEdicao.id) {
-          return { ...tarefa, titulo, descricao }
+    
+    try {
+        if (tarefaAcao === 'adicionar') {
+            const response = await api.post('/tasks', { title: titulo, description: descricao });
+            setSalvarTarefas([...salvarTarefas, response.data]);
+        } else {
+            const response = await api.put(`/tasks/${tarefaEdicao._id}`, { 
+                title: titulo, 
+                description: descricao 
+            });
+            setSalvarTarefas(prev => 
+              prev.map(tarefa => tarefa._id === tarefaEdicao._id ? response.data : tarefa)
+          );
         }
-        return tarefa
-      })
-      setSalvarTarefas(tarefasAtualizadas)
+    } catch (error) {
+        alert('Erro ao salvar tarefa');
     }
-    fechar()
-  }
+    fechar();
+}
 
-  function toggleCheck(id) {
-    const tarefasAtualizadas = salvarTarefas.map(tarefa => {
-      if (tarefa.id === id) {
-        return { ...tarefa, isChecked: !tarefa.isChecked }
-      }
-      return tarefa
-    })
-    setSalvarTarefas(tarefasAtualizadas)
+async function toggleCheck(id) {
+  try {
+      const tarefa = salvarTarefas.find(tarefa => tarefa._id === id);
+      const response = await api.patch(`/tasks/${id}/status`, {
+          checked: !tarefa.checkbox
+      });
+      setSalvarTarefas(salvarTarefas.map(tarefa => 
+          tarefa._id === id ? response.data : tarefa
+      ));
+  } catch (error) {
+      alert('Erro ao atualizar status da tarefa');
   }
+}
 
   function editarTarefa(tarefa) {
     setTarefaAcao('editar')
@@ -66,9 +81,14 @@ function App() {
     setAbrirPopUp(true)
   }
 
-  function excluirTarefa(id) {
-    const tarefasFiltradas = salvarTarefas.filter(tarefa => tarefa.id !== id)
-    setSalvarTarefas(tarefasFiltradas)
+  async function excluirTarefa(id) {
+    try {
+      await api.delete(`/tasks/${id}`);
+      const tarefasAtualizadas = salvarTarefas.filter(tarefa => tarefa._id !== id);
+      setSalvarTarefas(tarefasAtualizadas);
+    } catch (error) {
+        alert('Erro ao excluir tarefa');
+    }
   }
 
   function fechar(){
